@@ -23,8 +23,4 @@ public final class Autos {
         .withTimeout(1)
         .andThen(new RunCommand(() -> drivetrain.arcadeDrive(0, 0)));
   }
-
-  private Autos() {
-    throw new UnsupportedOperationException("This is a utility class!");
-  }
 }
