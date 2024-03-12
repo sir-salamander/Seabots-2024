@@ -15,8 +15,6 @@ import frc.robot.commands.LaunchNote;
 import frc.robot.commands.PrepareLaunch;
 import frc.robot.subsystems.CANDrivetrain;
 import frc.robot.subsystems.CANLauncher;
-import frc.robot.subsystems.PWMDrivetrain;
-import frc.robot.subsystems.PWMLauncher;
 
 // import frc.robot.subsystems.CANDrivetrain;
 // import frc.robot.subsystems.CANLauncher;
@@ -40,8 +38,7 @@ public class RobotContainer {
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
   private final CommandXboxController m_operatorController =
       new CommandXboxController(OperatorConstants.kOperatorControllerPort);
-  private final Joystick m_joystick = 
-      new Joystick(0);
+  private final Joystick m_joystick = new Joystick(0);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -71,10 +68,7 @@ public class RobotContainer {
             new PrepareLaunch(m_launcher)
                 .withTimeout(LauncherConstants.kLauncherDelay)
                 .andThen(new LaunchNote(m_launcher))
-                .handleInterrupt(() -> m_launcher.stop())
-                );
-
-
+                .handleInterrupt(() -> m_launcher.stop()));
 
     // Set up a binding to run the intake command while the operator is pressing and holding the
     // left Bumper
