@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -12,6 +13,8 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.LaunchNote;
 import frc.robot.commands.PrepareLaunch;
+import frc.robot.subsystems.CANDrivetrain;
+import frc.robot.subsystems.CANLauncher;
 import frc.robot.subsystems.PWMDrivetrain;
 import frc.robot.subsystems.PWMLauncher;
 
@@ -26,10 +29,10 @@ import frc.robot.subsystems.PWMLauncher;
  */
 public class RobotContainer {
   // The robot's subsystems are defined here.
-  private final PWMDrivetrain m_drivetrain = new PWMDrivetrain();
-  // private final CANDrivetrain m_drivetrain = new CANDrivetrain();
-  private final PWMLauncher m_launcher = new PWMLauncher();
-  // private final CANLauncher m_launcher = new CANLauncher();
+  // private final PWMDrivetrain m_drivetrain = new PWMDrivetrain();
+  private final CANDrivetrain m_drivetrain = new CANDrivetrain();
+  // private final PWMLauncher m_launcher = new PWMLauncher();
+  private final CANLauncher m_launcher = new CANLauncher();
 
   /*The gamepad provided in the KOP shows up like an XBox controller if the mode switch is set to X mode using the
    * switch on the top.*/
@@ -37,6 +40,8 @@ public class RobotContainer {
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
   private final CommandXboxController m_operatorController =
       new CommandXboxController(OperatorConstants.kOperatorControllerPort);
+  private final Joystick m_joystick = 
+      new Joystick(0);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -66,7 +71,10 @@ public class RobotContainer {
             new PrepareLaunch(m_launcher)
                 .withTimeout(LauncherConstants.kLauncherDelay)
                 .andThen(new LaunchNote(m_launcher))
-                .handleInterrupt(() -> m_launcher.stop()));
+                .handleInterrupt(() -> m_launcher.stop())
+                );
+
+
 
     // Set up a binding to run the intake command while the operator is pressing and holding the
     // left Bumper
