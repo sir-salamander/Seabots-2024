@@ -20,8 +20,8 @@ public class CANLauncher extends SubsystemBase {
     m_launchWheel = new TalonSRX(6);
     m_feedWheel = new TalonSRX(5);
 
-    m_launchWheel.enableCurrentLimit(true);
-    m_feedWheel.enableCurrentLimit(true);
+    m_launchWheel.enableCurrentLimit(false);
+    m_feedWheel.enableCurrentLimit(false);
   }
 
   /**
