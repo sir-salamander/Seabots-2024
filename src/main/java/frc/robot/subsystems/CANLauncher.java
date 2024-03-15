@@ -25,7 +25,6 @@ public class CANLauncher extends SubsystemBase {
     m_launchWheel = new TalonSRX(6);
     m_feedWheel = new TalonSRX(5);
 
-    m_grabber = new CANSparkMax(7, MotorType.kBrushed);
     m_climber = new CANSparkMax(8, MotorType.kBrushless);
 
     m_launchWheel.enableCurrentLimit(false);
@@ -69,45 +68,5 @@ public class CANLauncher extends SubsystemBase {
   public void stop() {
     m_launchWheel.set(ControlMode.PercentOutput, 0);
     m_feedWheel.set(ControlMode.PercentOutput, 0);
-  }
-
-  public Command GrabNote() {
-    return this.startEnd(
-        () -> {
-          m_grabber.set(kGrabIntakeSpeed);
-        },
-        () -> {
-          stop();
-        });
-  }
-
-  public Command ReleaseNote() {
-    return this.startEnd(
-        () -> {
-          m_grabber.set(kGrabReleaseSpeed);
-        },
-        () -> {
-          stop();
-        });
-  }
-
-  public Command ClimbUp() {
-    return this.startEnd(
-        () -> {
-          m_climber.set(kclimberUp);
-        },
-        () -> {
-          stop();
-        });
-  }
-
-  public Command ClimbDown() {
-    return this.startEnd(
-        () -> {
-          m_climber.set(kclimberDown);
-        },
-        () -> {
-          stop();
-        });
   }
 }
