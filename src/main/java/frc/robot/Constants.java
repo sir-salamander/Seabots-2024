@@ -24,7 +24,7 @@ public final class Constants {
     // PWM ports/CAN IDs for motor controllers
     public static final int kLeftRearID = 2;
     public static final int kLeftFrontID = 1;
-    public static final int kRightRearID = 3;  
+    public static final int kRightRearID = 3;
     public static final int kRightFrontID = 4;
 
     // Current limit for drivetrain motors
@@ -46,6 +46,12 @@ public final class Constants {
     public static final double kLaunchFeederSpeed = 5;
     public static final double kIntakeLauncherSpeed = -1;
     public static final double kIntakeFeederSpeed = -.2;
+
+    public static final double kGrabIntakeSpeed = 1;
+    public static final double kGrabReleaseSpeed = -1;
+
+    public static final double kclimberUp = .5;
+    public static final double kclimberDown = -.5;
 
     public static final double kLauncherDelay = 1;
   }

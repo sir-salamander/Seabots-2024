@@ -31,6 +31,10 @@ public class RobotContainer {
   // private final PWMLauncher m_launcher = new PWMLauncher();
   private final CANLauncher m_launcher = new CANLauncher();
 
+  private final CANLauncher m_grabber = new CANLauncher();
+
+  private final CANLauncher m_climber = new CANLauncher();
+
   /*The gamepad provided in the KOP shows up like an XBox controller if the mode switch is set to X mode using the
    * switch on the top.*/
   private final CommandXboxController m_driverController =
@@ -55,13 +59,13 @@ public class RobotContainer {
         new RunCommand(
             () ->
                 m_drivetrain.arcadeDrive(
-                    -m_driverController.getRawAxis(2), -m_driverController.getRawAxis(3)),
+                    -m_driverController.getRawAxis(1), -m_driverController.getRawAxis(4)),
             m_drivetrain));
 
     /*Create an inline sequence to run when the operator presses and holds the A (green) button. Run the PrepareLaunch
      * command for 1 seconds and then run the LaunchNote command */
     m_operatorController
-        .button(2)
+        .button(1)
         .whileTrue(
             new PrepareLaunch(m_launcher)
                 .withTimeout(LauncherConstants.kLauncherDelay)
@@ -70,7 +74,15 @@ public class RobotContainer {
 
     // Set up a binding to run the intake command while the operator is pressing and holding the
     // left Bumper
-    m_operatorController.button(7).whileTrue(m_launcher.getIntakeCommand());
+    m_operatorController.button(2).whileTrue(m_launcher.getIntakeCommand());
+    // grab note
+    m_operatorController.button(3).whileTrue(m_grabber.GrabNote());
+    // release note
+    m_operatorController.button(4).whileTrue(m_grabber.ReleaseNote());
+    // climb up
+    m_operatorController.pov(0).whileTrue(m_climber.ClimbUp());
+    // climb down
+    m_operatorController.pov(180).whileTrue(m_climber.ClimbDown());
   }
 
   /**

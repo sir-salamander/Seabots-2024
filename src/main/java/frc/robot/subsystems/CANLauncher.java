@@ -8,6 +8,8 @@ import static frc.robot.Constants.LauncherConstants.*;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -15,10 +17,16 @@ public class CANLauncher extends SubsystemBase {
   TalonSRX m_launchWheel;
   TalonSRX m_feedWheel;
 
+  CANSparkMax m_grabber;
+  CANSparkMax m_climber;
+
   /** Creates a new Launcher. */
   public CANLauncher() {
     m_launchWheel = new TalonSRX(6);
     m_feedWheel = new TalonSRX(5);
+
+    m_grabber = new CANSparkMax(7, MotorType.kBrushed);
+    m_climber = new CANSparkMax(8, MotorType.kBrushless);
 
     m_launchWheel.enableCurrentLimit(false);
     m_feedWheel.enableCurrentLimit(false);
@@ -61,5 +69,45 @@ public class CANLauncher extends SubsystemBase {
   public void stop() {
     m_launchWheel.set(ControlMode.PercentOutput, 0);
     m_feedWheel.set(ControlMode.PercentOutput, 0);
+  }
+
+  public Command GrabNote() {
+    return this.startEnd(
+        () -> {
+          m_grabber.set(kGrabIntakeSpeed);
+        },
+        () -> {
+          stop();
+        });
+  }
+
+  public Command ReleaseNote() {
+    return this.startEnd(
+        () -> {
+          m_grabber.set(kGrabReleaseSpeed);
+        },
+        () -> {
+          stop();
+        });
+  }
+
+  public Command ClimbUp() {
+    return this.startEnd(
+        () -> {
+          m_climber.set(kclimberUp);
+        },
+        () -> {
+          stop();
+        });
+  }
+
+  public Command ClimbDown() {
+    return this.startEnd(
+        () -> {
+          m_climber.set(kclimberDown);
+        },
+        () -> {
+          stop();
+        });
   }
 }
