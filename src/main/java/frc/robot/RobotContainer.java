@@ -61,7 +61,7 @@ public class RobotContainer {
         new RunCommand(
             () ->
                 m_drivetrain.arcadeDrive(
-                    -m_driverController.getRawAxis(1), -m_driverController.getRawAxis(4)),
+                    -m_driverController.getLeftY(), -m_driverController.getRightX()),
             m_drivetrain));
 
     /*Create an inline sequence to run when the operator presses and holds the A (green) button. Run the PrepareLaunch

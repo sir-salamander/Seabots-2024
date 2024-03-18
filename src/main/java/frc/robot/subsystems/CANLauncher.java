@@ -8,7 +8,6 @@ import static frc.robot.Constants.LauncherConstants.*;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -25,7 +24,6 @@ public class CANLauncher extends SubsystemBase {
     m_launchWheel = new TalonSRX(6);
     m_feedWheel = new TalonSRX(5);
 
-    m_climber = new CANSparkMax(8, MotorType.kBrushless);
 
     m_launchWheel.enableCurrentLimit(false);
     m_feedWheel.enableCurrentLimit(false);

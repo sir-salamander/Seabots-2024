@@ -4,8 +4,9 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /* This class declares the subsystem for the robot drivetrain if controllers are connected via CAN. Make sure to go to
@@ -25,17 +26,17 @@ public class CANDrivetrain extends SubsystemBase {
    */
   public CANDrivetrain() {
 
-    VictorSP leftFront = new VictorSP(1);
-    VictorSP leftRear = new VictorSP(2);
-    VictorSP rightFront = new VictorSP(3);
-    VictorSP rightRear = new VictorSP(4);
+    WPI_VictorSPX leftFront = new WPI_VictorSPX(1);
+    WPI_VictorSPX leftRear = new WPI_VictorSPX(2);
+    WPI_VictorSPX rightFront = new WPI_VictorSPX(3);
+    WPI_VictorSPX rightRear = new WPI_VictorSPX(4);
 
     /*Sets current limits for the drivetrain motors. This helps reduce the likelihood of wheel spin, reduces motor heating
      *at stall (Drivetrain pushing against something) and helps maintain battery voltage under heavy demand */
 
     // Set the rear motors to follow the front motors.
-    leftFront.addFollower(leftRear);
-    rightFront.addFollower(rightRear);
+    leftRear.follow(leftFront);
+    rightRear.follow(rightFront);
 
     // Invert the left side so both side drive forward with positive motor outputs
     leftFront.setInverted(true);

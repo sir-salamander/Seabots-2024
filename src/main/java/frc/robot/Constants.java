@@ -47,8 +47,8 @@ public final class Constants {
     public static final double kIntakeLauncherSpeed = -1;
     public static final double kIntakeFeederSpeed = -.2;
 
-    public static final double kGrabIntakeSpeed = 1;
-    public static final double kGrabReleaseSpeed = -1;
+    public static final double kGrabIntakeSpeed = .25;
+    public static final double kGrabReleaseSpeed = -.25;
 
     public static final double kclimberUp = .5;
     public static final double kclimberDown = -.5;
