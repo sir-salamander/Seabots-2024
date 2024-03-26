@@ -4,12 +4,14 @@
 
 package frc.robot;
 
+import static frc.robot.Constants.LauncherConstants.kLaunchFeederSpeed;
+import static frc.robot.Constants.LauncherConstants.kLauncherSpeed;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.LauncherConstants;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
 import frc.robot.commands.LaunchNote;
 import frc.robot.commands.PrepareLaunch;
 import frc.robot.subsystems.CANClimber;
@@ -78,9 +80,9 @@ public class RobotContainer {
     // left Bumper
     m_operatorController.button(2).whileTrue(m_launcher.getIntakeCommand());
     // grab note
-    m_operatorController.button(3).whileTrue(m_grabber.GrabNote());
+    m_operatorController.button(4).whileTrue(m_grabber.GrabNote());
     // release note
-    m_operatorController.button(4).whileTrue(m_grabber.ReleaseNote());
+    m_operatorController.button(3).whileTrue(m_grabber.ReleaseNote());
     // climb up
     m_operatorController.pov(0).whileTrue(m_climber.ClimbUp());
     // climb down
@@ -93,7 +95,17 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return Autos.exampleAuto(m_drivetrain);
+    // shooting part
+
+    return new RunCommand(() -> m_launcher.setLaunchWheel(kLauncherSpeed))
+        .withTimeout(1)
+        .andThen(new RunCommand(() -> m_launcher.setFeedWheel(kLaunchFeederSpeed)))
+        .withTimeout(5)
+        .andThen(new RunCommand(() -> m_launcher.setLaunchWheel(0)))
+        .alongWith(new RunCommand(() -> m_launcher.setFeedWheel(0)))
+        // driving part
+        .andThen(new RunCommand(() -> m_drivetrain.arcadeDrive(1, 0)))
+        .withTimeout(5)
+        .andThen(new RunCommand(() -> m_drivetrain.arcadeDrive(0, 0)));
   }
 }
