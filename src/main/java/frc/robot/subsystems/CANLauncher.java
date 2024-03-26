@@ -17,7 +17,6 @@ public class CANLauncher extends SubsystemBase {
   TalonSRX m_feedWheel;
 
   CANSparkMax m_grabber;
-  CANSparkMax m_climber;
 
   /** Creates a new Launcher. */
   public CANLauncher() {

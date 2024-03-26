@@ -4,10 +4,12 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.IMotorController;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -32,15 +34,19 @@ public class CANDrivetrain extends SubsystemBase {
 
     WPI_VictorSPX leftFront = new WPI_VictorSPX(1);
     WPI_VictorSPX leftRear = new WPI_VictorSPX(2);
-    WPI_VictorSPX rightFront = new WPI_VictorSPX(3);
     WPI_VictorSPX rightRear = new WPI_VictorSPX(4);
 
-    /*Sets current limits for the drivetrain motors. This helps reduce the likelihood of wheel spin, reduces motor heating
-     *at stall (Drivetrain pushing against something) and helps maintain battery voltage under heavy demand */
+    Talon rightFront = new Talon(0);
+
+    //  *at stall (Drivetrain pushing against something) and helps maintain battery voltage under
+    // heavy demand */
+
+    // Sets current limits for the drivetrain motors. This helps reduce the likelihood of wheel
+    // spin, reduces motor heating
 
     // Set the rear motors to follow the front motors.
     leftRear.follow(leftFront);
-    rightRear.follow(rightFront);
+    rightRear.follow((IMotorController) rightFront);
 
     // Invert the left side so both side drive forward with positive motor outputs
     leftFront.setInverted(true);

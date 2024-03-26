@@ -53,6 +53,6 @@ public final class Constants {
     public static final double kclimberUp = 1;
     public static final double kclimberDown = -1;
 
-    public static final double kLauncherDelay = 1;
+    public static final double kLauncherDelay = 1.5;
   }
 }
