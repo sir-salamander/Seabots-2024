@@ -17,6 +17,7 @@ public class CANClimber extends SubsystemBase {
   CANSparkMax m_climber;
 
   Boolean erect = false;
+
   public CANClimber() {
     m_climber = new CANSparkMax(8, MotorType.kBrushless);
   }

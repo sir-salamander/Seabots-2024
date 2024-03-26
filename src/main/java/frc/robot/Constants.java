@@ -50,8 +50,8 @@ public final class Constants {
     public static final double kGrabIntakeSpeed = .25;
     public static final double kGrabReleaseSpeed = -.25;
 
-    public static final double kclimberUp = .5;
-    public static final double kclimberDown = -.5;
+    public static final double kclimberUp = 1;
+    public static final double kclimberDown = -1;
 
     public static final double kLauncherDelay = 1;
   }
