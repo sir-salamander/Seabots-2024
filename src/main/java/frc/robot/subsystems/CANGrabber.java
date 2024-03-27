@@ -6,17 +6,16 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.LauncherConstants.*;
 
-import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.revrobotics.CANSparkMax;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CANGrabber extends SubsystemBase {
   /** Creates a new CANGrabber. */
-  CANSparkMax m_grabber;
+  Talon m_grabber;
 
   public CANGrabber() {
-    m_grabber = new CANSparkMax(7, MotorType.kBrushed);
+    m_grabber = new Talon(0);
   }
 
   @Override

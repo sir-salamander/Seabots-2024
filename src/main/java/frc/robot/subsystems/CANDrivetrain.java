@@ -4,12 +4,14 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.IMotorController;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.Talon;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -27,6 +29,7 @@ public class CANDrivetrain extends SubsystemBase {
 
   AHRS ahrs;
 
+
   /*Constructor. This method is called when an instance of the class is created. This should generally be used to set up
    * member variables and perform any configuration or set up necessary on hardware.
    */
@@ -36,8 +39,9 @@ public class CANDrivetrain extends SubsystemBase {
     WPI_VictorSPX leftRear = new WPI_VictorSPX(2);
     WPI_VictorSPX rightRear = new WPI_VictorSPX(4);
 
-    Talon rightFront = new Talon(0);
+    CANSparkMax rightFront = new CANSparkMax(8, MotorType.kBrushed);
 
+    rightFront.setSmartCurrentLimit(30);
     //  *at stall (Drivetrain pushing against something) and helps maintain battery voltage under
     // heavy demand */
 
@@ -46,15 +50,14 @@ public class CANDrivetrain extends SubsystemBase {
 
     // Set the rear motors to follow the front motors.
     leftRear.follow(leftFront);
-    rightRear.follow((IMotorController) rightFront);
-
+    MotorControllerGroup m_right = new MotorControllerGroup(rightFront, rightRear);
     // Invert the left side so both side drive forward with positive motor outputs
     leftFront.setInverted(true);
-    rightFront.setInverted(false);
+    rightFront.setInverted(true);
 
     // Put the front motors into the differential drive object. This will control all 4 motors with
     // the rears set to follow the fronts
-    m_drivetrain = new DifferentialDrive(leftFront, rightFront);
+    m_drivetrain = new DifferentialDrive(leftFront, m_right);
 
     ahrs = new AHRS(SPI.Port.kMXP);
   }

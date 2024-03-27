@@ -4,14 +4,12 @@
 
 package frc.robot;
 
-import static frc.robot.Constants.LauncherConstants.kLaunchFeederSpeed;
-import static frc.robot.Constants.LauncherConstants.kLauncherSpeed;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.LauncherConstants;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Auto;
 import frc.robot.commands.LaunchNote;
 import frc.robot.commands.PrepareLaunch;
 import frc.robot.subsystems.CANClimber;
@@ -63,7 +61,7 @@ public class RobotContainer {
         new RunCommand(
             () ->
                 m_drivetrain.arcadeDrive(
-                    -m_driverController.getLeftY(), -m_driverController.getRightX()),
+                    -m_driverController.getRightX(), -m_driverController.getLeftY()),
             m_drivetrain));
 
     /*Create an inline sequence to run when the operator presses and holds the A (green) button. Run the PrepareLaunch
@@ -96,16 +94,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // shooting part
+    return Auto.exampleAuto(m_drivetrain, m_launcher);
 
-    return new RunCommand(() -> m_launcher.setLaunchWheel(kLauncherSpeed))
-        .withTimeout(1)
-        .andThen(new RunCommand(() -> m_launcher.setFeedWheel(kLaunchFeederSpeed)))
-        .withTimeout(5)
-        .andThen(new RunCommand(() -> m_launcher.setLaunchWheel(0)))
-        .alongWith(new RunCommand(() -> m_launcher.setFeedWheel(0)))
-        // driving part
-        .andThen(new RunCommand(() -> m_drivetrain.arcadeDrive(1, 0)))
-        .withTimeout(5)
-        .andThen(new RunCommand(() -> m_drivetrain.arcadeDrive(0, 0)));
   }
 }
