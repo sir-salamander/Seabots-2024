@@ -29,9 +29,9 @@ public final class Auto {
      */
     
      return new SequentialCommandGroup(
-      new ParallelRaceGroup(new RunCommand(() -> m_launcher.m_launchWheel.set(ControlMode.PercentOutput, 1)), new SequentialCommandGroup(
+      new ParallelCommandGroup(new RunCommand(() -> m_launcher.m_launchWheel.set(ControlMode.PercentOutput, 1)), new SequentialCommandGroup(
         new WaitCommand(1.5).andThen(new RunCommand(() -> m_launcher.m_feedWheel.set(ControlMode.PercentOutput, 1))).withTimeout(1)
-      )),
+      )).withTimeout(5),
     new RunCommand(() -> m_drivetrain.arcadeDrive(1, 0)).withTimeout(5)
     );
   }
