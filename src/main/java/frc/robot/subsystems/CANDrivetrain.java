@@ -65,14 +65,14 @@ public class CANDrivetrain extends SubsystemBase {
   /*Method to control the drivetrain using arcade drive. Arcade drive takes a speed in the X (forward/back) direction
    * and a rotation about the Z (turning the robot about it's center) and uses these to control the drivetrain motors */
   public void arcadeDrive(double speed, double rotation) {
-    m_drivetrain.arcadeDrive(speed, rotation);
+    m_drivetrain.arcadeDrive(Math.min(speed, 0.8), rotation);
   }
 
   @Override
   public void periodic() {
     /*This method will be called once per scheduler run. It can be used for running tasks we know we want to update each
      * loop such as processing sensor data. Our drivetrain is simple so we don't have anything to put here */
-
+    arcadeDrive(0, 0);
     SmartDashboard.putNumber("Speed", ahrs.getRawAccelY());
   }
 }
